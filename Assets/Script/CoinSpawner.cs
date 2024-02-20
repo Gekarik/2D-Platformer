@@ -19,7 +19,7 @@ public class CoinSpawner : MonoBehaviour
 
         while (true)
         {
-            _spawnPoint = new Vector2(UnityEngine.Random.Range(-80, 80), 0);
+            _spawnPoint = new Vector2(Random.Range(-80, 80), 0);
             Instantiate(_coinPrefab, _spawnPoint, Quaternion.identity);
             yield return wait;
         }

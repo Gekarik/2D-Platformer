@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(AnimatorKnight))]
 public class EnemyPatroller : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 2f;
@@ -12,15 +12,18 @@ public class EnemyPatroller : MonoBehaviour
     private Vector2 _leftPosition;
     private Vector2 _rightPosition;
     private Vector2 _currentTarget;
+    private bool _isResting;
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
-    private bool _isResting;
 
-    private void Start()
+    private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+    }
 
+    private void Start()
+    {
         _startPosition = transform.position;
         _leftPosition = new Vector2(_startPosition.x - _offset, _startPosition.y);
         _rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
@@ -38,8 +41,9 @@ public class EnemyPatroller : MonoBehaviour
 
     private void Patrol()
     {
-        _animator.SetFloat("Speed", _moveSpeed);
         _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _currentTarget, _moveSpeed * Time.deltaTime);
+
+        _animator.SetFloat(AnimatorKnight.Params.Speed, _moveSpeed);
 
         if (_rigidbody2D.position.x == _currentTarget.x && !_isResting)
         {
@@ -51,7 +55,7 @@ public class EnemyPatroller : MonoBehaviour
 
     private void Rest()
     {
-        _animator.SetFloat("Speed", 0f);
+        _animator.SetFloat(AnimatorKnight.Params.Speed, 0f);
 
         if (_restTimer > 0)
         {

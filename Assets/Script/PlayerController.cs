@@ -1,14 +1,10 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D),typeof(Animator))]
+public class PlayerController : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
-
-    private bool isFacingRight = false;
-    private float _moveInput;
-    private Rigidbody2D _rigidBody;
-    private Animator _animator;
 
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _jumpForce;
@@ -16,6 +12,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _groundSensor;
     [SerializeField] private LayerMask _groundLayer;
 
+    private bool isFacingRight = false;
+    private float _moveInput;
+    private Rigidbody2D _rigidBody;
+    private Animator _animator;
+    
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -33,7 +34,8 @@ public class Player : MonoBehaviour
     {
         _moveInput = Input.GetAxis(Horizontal);
         _rigidBody.velocity = new Vector2(_moveInput * _movementSpeed, _rigidBody.velocity.y);
-        _animator.SetFloat("Speed", Mathf.Abs(_moveInput * _movementSpeed));
+
+        _animator.SetFloat(AnimatorPlayerController.Params.Speed, Mathf.Abs(_moveInput * _movementSpeed));
     }
 
     private void Flip()
@@ -48,7 +50,6 @@ public class Player : MonoBehaviour
     }
 
     private bool IsGrounded() => Physics2D.OverlapCircle(_groundSensor.position, _radiusOfSensor, _groundLayer);
-
 
     private void Jump()
     {
