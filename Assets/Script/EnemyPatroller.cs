@@ -43,7 +43,7 @@ public class EnemyPatroller : MonoBehaviour
     {
         _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _currentTarget, _moveSpeed * Time.deltaTime);
 
-        _animator.SetFloat(AnimatorKnight.Params.Speed, _moveSpeed);
+        _animator.SetFloat(AnimatorController.Params.Speed, _moveSpeed);
 
         if (_rigidbody2D.position.x == _currentTarget.x && !_isResting)
         {
@@ -55,7 +55,7 @@ public class EnemyPatroller : MonoBehaviour
 
     private void Rest()
     {
-        _animator.SetFloat(AnimatorKnight.Params.Speed, 0f);
+        _animator.SetFloat(AnimatorController.Params.Speed, 0f);
 
         if (_restTimer > 0)
         {

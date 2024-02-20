@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class AnimatorKnight : MonoBehaviour
+public class AnimatorController : MonoBehaviour
 {
-    public static class Params 
+    public static class Params
     {
         public const string Speed = nameof(Speed);
     }

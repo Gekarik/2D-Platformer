@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
+    private const string Jump = nameof(Jump);
 
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _jumpForce;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         Flip();
-        Jump();
+        JumpLogic();
     }
 
     private void Move()
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
         _moveInput = Input.GetAxis(Horizontal);
         _rigidBody.velocity = new Vector2(_moveInput * _movementSpeed, _rigidBody.velocity.y);
 
-        _animator.SetFloat(AnimatorPlayerController.Params.Speed, Mathf.Abs(_moveInput * _movementSpeed));
+        _animator.SetFloat(AnimatorController.Params.Speed, Mathf.Abs(_moveInput * _movementSpeed));
     }
 
     private void Flip()
@@ -51,12 +52,9 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded() => Physics2D.OverlapCircle(_groundSensor.position, _radiusOfSensor, _groundLayer);
 
-    private void Jump()
+    private void JumpLogic()
     {
-        if (Input.GetButtonDown("Jump") && IsGrounded())
+        if (Input.GetAxis(Jump) > 0 && IsGrounded())
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
-
-        if (Input.GetButtonDown("Jump") && _rigidBody.velocity.y > 0f)
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y * 0.5f);
     }
 }

@@ -5,6 +5,8 @@ public class CoinSpawner : MonoBehaviour
 {
     [SerializeField] private Transform _coinPrefab;
     [SerializeField] private float _delayBeforeSpawning = 2.0f;
+    [SerializeField] private int startPositionX = -80;
+    [SerializeField] private int endPositionX = -80;
 
     private Vector2 _spawnPoint;
 
@@ -19,7 +21,7 @@ public class CoinSpawner : MonoBehaviour
 
         while (true)
         {
-            _spawnPoint = new Vector2(Random.Range(-80, 80), 0);
+            _spawnPoint = new Vector2(Random.Range(startPositionX, endPositionX), 0);
             Instantiate(_coinPrefab, _spawnPoint, Quaternion.identity);
             yield return wait;
         }
