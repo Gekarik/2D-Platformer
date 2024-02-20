@@ -7,7 +7,7 @@ public class EnemyPatroller : MonoBehaviour
     [SerializeField] private float _moveSpeed = 2f;
     [SerializeField] private float _restTime = 2f;
     [SerializeField] private float _offset = 5f;
-    
+
     private float _restTimer;
     private Vector2 _startPosition;
     private Vector2 _leftPosition;
@@ -41,6 +41,7 @@ public class EnemyPatroller : MonoBehaviour
 
     private void Patrol()
     {
+        _animator.SetFloat("Speed", _moveSpeed);
         _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _currentTarget, _moveSpeed * Time.deltaTime);
 
         if (_rigidbody2D.position.x == _currentTarget.x && !isResting)
@@ -53,24 +54,17 @@ public class EnemyPatroller : MonoBehaviour
 
     private void Rest()
     {
-        if (isResting)
-        {
-            _animator.SetFloat("Speed", 0f);
+        _animator.SetFloat("Speed", 0f);
 
-            if (_restTimer > 0)
-            {
-                _restTimer -= Time.deltaTime;
-            }
-            else
-            {
-                isResting = false;
-                _currentTarget = _currentTarget == _rightPosition ? _leftPosition : _rightPosition; // Смена направления
-                _restTimer = _restTime;
-            }
+        if (_restTimer > 0)
+        {
+            _restTimer -= Time.deltaTime;
         }
         else
         {
-            _animator.SetFloat("Speed", _moveSpeed);
+            isResting = false;
+            _currentTarget = _currentTarget == _rightPosition ? _leftPosition : _rightPosition;
+            _restTimer = _restTime;
         }
     }
 
