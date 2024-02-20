@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -15,7 +14,7 @@ public class EnemyPatroller : MonoBehaviour
     private Vector2 _currentTarget;
     private Rigidbody2D _rigidbody2D;
     private Animator _animator;
-    private bool isResting;
+    private bool _isResting;
 
     private void Start()
     {
@@ -27,13 +26,11 @@ public class EnemyPatroller : MonoBehaviour
         _rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
 
         _currentTarget = _leftPosition;
-
-        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (isResting)
+        if (_isResting)
             Rest();
         else
             Patrol();
@@ -44,10 +41,10 @@ public class EnemyPatroller : MonoBehaviour
         _animator.SetFloat("Speed", _moveSpeed);
         _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _currentTarget, _moveSpeed * Time.deltaTime);
 
-        if (_rigidbody2D.position.x == _currentTarget.x && !isResting)
+        if (_rigidbody2D.position.x == _currentTarget.x && !_isResting)
         {
             Flip();
-            isResting = true;
+            _isResting = true;
             _restTimer = _restTime;
         }
     }
@@ -62,7 +59,7 @@ public class EnemyPatroller : MonoBehaviour
         }
         else
         {
-            isResting = false;
+            _isResting = false;
             _currentTarget = _currentTarget == _rightPosition ? _leftPosition : _rightPosition;
             _restTimer = _restTime;
         }
