@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(AnimatorKnight))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class EnemyPatroller : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 2f;
