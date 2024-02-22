@@ -1,38 +1,44 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InputReader),typeof(Mover),typeof(PlayerAnimator))]
+[RequireComponent(typeof(InputReader),typeof(Mover),typeof(AnimatorController))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
 
+    private bool _isJumping;
+    private float _movementInput;
+
     private InputReader _inputReader;
     private Mover _mover;
-    private PlayerAnimator _animatorController;
+    private AnimatorController _animatorController;
 
     private void Awake()
     {
         _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<Mover>();
-        _animatorController = GetComponent<PlayerAnimator>();
+        _animatorController = GetComponent<AnimatorController>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        float movementInput = _inputReader.GetHorizontalMovement();
-        bool isJumping = _inputReader.GetJumpMovement();
-
-        if (isJumping)
+        if (_isJumping)
             _mover.Jump(_jumpForce);
 
-        if (movementInput != 0)
+        if (_movementInput != 0)
         {
-            _mover.Move(movementInput * _moveSpeed);
+            _mover.Move(_movementInput * _moveSpeed);
             _animatorController.SetWalking(true);
         }
         else
         {
             _animatorController.SetWalking(false);
         }
+    }
+
+    private void Update()
+    {
+        _movementInput = _inputReader.GetHorizontalMovement();
+        _isJumping = _inputReader.GetJumpMovement();
     }
 }

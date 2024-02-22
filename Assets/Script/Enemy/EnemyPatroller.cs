@@ -1,33 +1,31 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(KnightAnimator))]
+[RequireComponent(typeof(Rigidbody2D), typeof(AnimatorController))]
 public class EnemyPatroller : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 2f;
     [SerializeField] private float _offset = 5f;
     [SerializeField] private float _restTime = 2f;
 
+    private Quaternion TurnLeft = Quaternion.Euler(0f, 180f, 0f);
+    private Quaternion TurnRight = Quaternion.identity;
     private float _tempRestTime;
     private bool _isResting = true;
     private Vector2 _startPosition;
     private Vector2 _currentTarget;
     private Rigidbody2D _rigidbody2D;
-    private KnightAnimator _knightAnimator;
+    private AnimatorController _knightAnimator;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _knightAnimator = GetComponent<KnightAnimator>();
-    }
-
-    private void Start()
-    {
+        _knightAnimator = GetComponent<AnimatorController>();
         _tempRestTime = _restTime;
         _startPosition = _rigidbody2D.position;
         UpdateTarget();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_isResting)
             Rest();
@@ -75,8 +73,14 @@ public class EnemyPatroller : MonoBehaviour
 
     private void Flip()
     {
-        var localScale = transform.localScale;
-        localScale.x *= -1f;
-        transform.localScale = localScale;
+        switch (_currentTarget.x - _rigidbody2D.position.x)
+        {
+            case > 0:
+                transform.localRotation = TurnLeft;
+                break;
+            case < 0:
+                transform.localRotation = TurnRight;
+                break;
+        }
     }
 }

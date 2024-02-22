@@ -1,16 +1,7 @@
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class AnimatorData : MonoBehaviour
 {
-    private Animator _animator;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
-
-    public void SetWalking(bool isWalking) => _animator.SetBool(Params.isWalking, isWalking);
-
     public static class Params
     {
         public const string isWalking = nameof(isWalking);
