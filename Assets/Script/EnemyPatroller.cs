@@ -1,34 +1,30 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D), typeof(KnightAnimator))]
 public class EnemyPatroller : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 2f;
-    [SerializeField] private float _restTime = 2f;
     [SerializeField] private float _offset = 5f;
+    [SerializeField] private float _restTime = 2f;
 
-    private float _restTimer;
+    private float _tempRestTime;
+    private bool _isResting = true;
     private Vector2 _startPosition;
-    private Vector2 _leftPosition;
-    private Vector2 _rightPosition;
     private Vector2 _currentTarget;
-    private bool _isResting;
     private Rigidbody2D _rigidbody2D;
-    private Animator _animator;
+    private KnightAnimator _knightAnimator;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
+        _knightAnimator = GetComponent<KnightAnimator>();
     }
 
     private void Start()
     {
-        _startPosition = transform.position;
-        _leftPosition = new Vector2(_startPosition.x - _offset, _startPosition.y);
-        _rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
-
-        _currentTarget = _leftPosition;
+        _tempRestTime = _restTime;
+        _startPosition = _rigidbody2D.position;
+        UpdateTarget();
     }
 
     private void Update()
@@ -39,33 +35,41 @@ public class EnemyPatroller : MonoBehaviour
             Patrol();
     }
 
-    private void Patrol()
+    private void Rest()
     {
-        _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _currentTarget, _moveSpeed * Time.deltaTime);
+        _restTime -= Time.deltaTime;
 
-        _animator.SetFloat(AnimatorController.Params.Speed, _moveSpeed);
-
-        if (_rigidbody2D.position.x == _currentTarget.x && !_isResting)
+        if (_restTime < 0f)
         {
-            Flip();
-            _isResting = true;
-            _restTimer = _restTime;
+            _restTime = _tempRestTime;
+            _isResting = false;
+            _knightAnimator.SetWalking(true);
         }
     }
 
-    private void Rest()
+    private void UpdateTarget()
     {
-        _animator.SetFloat(AnimatorController.Params.Speed, 0f);
+        Vector2 leftPosition = new Vector2(_startPosition.x - _offset, _startPosition.y);
+        Vector2 rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
 
-        if (_restTimer > 0)
+        if (_rigidbody2D.position == leftPosition)
+            _currentTarget = rightPosition;
+        else
+            _currentTarget = leftPosition;
+    }
+
+    private void Patrol()
+    {
+        if (_rigidbody2D.position == _currentTarget)
         {
-            _restTimer -= Time.deltaTime;
+            UpdateTarget();
+            Flip();
+            _knightAnimator.SetWalking(false);
+            _isResting = true;
         }
         else
         {
-            _isResting = false;
-            _currentTarget = _currentTarget == _rightPosition ? _leftPosition : _rightPosition;
-            _restTimer = _restTime;
+            _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _currentTarget, _moveSpeed * Time.deltaTime);
         }
     }
 
