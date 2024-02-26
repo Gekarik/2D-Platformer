@@ -22,7 +22,7 @@ public class EnemyPatroller : MonoBehaviour
         _knightAnimator = GetComponent<AnimatorController>();
         _tempRestTime = _restTime;
         _startPosition = _rigidbody2D.position;
-        UpdateTarget();
+        ChangeTarget();
     }
 
     private void FixedUpdate()
@@ -45,7 +45,7 @@ public class EnemyPatroller : MonoBehaviour
         }
     }
 
-    private void UpdateTarget()
+    private void ChangeTarget()
     {
         Vector2 leftPosition = new Vector2(_startPosition.x - _offset, _startPosition.y);
         Vector2 rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
@@ -60,7 +60,7 @@ public class EnemyPatroller : MonoBehaviour
     {
         if (_rigidbody2D.position == _currentTarget)
         {
-            UpdateTarget();
+            ChangeTarget();
             Flip();
             _knightAnimator.SetWalking(false);
             _isResting = true;

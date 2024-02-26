@@ -3,9 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Mover : MonoBehaviour
 {
-    public bool _isGrounded;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _jumpForce;
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _spriteRenderer;
+
+    public bool IsGrounded { get; private set; }
 
     private void Awake()
     {
@@ -13,13 +16,13 @@ public class Mover : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnCollisionEnter2D(Collision2D other) => IsGroundedUpdate(other, true);
+    private void OnCollisionEnter2D(Collision2D other) => UpdateIsGrounded(other, true);
 
-    private void OnCollisionExit2D(Collision2D other) => IsGroundedUpdate(other, false);
+    private void OnCollisionExit2D(Collision2D other) => UpdateIsGrounded(other, false);
 
     public void Move(float direction)
     {
-        _rigidBody.velocity = new Vector2(direction, _rigidBody.velocity.y);
+        _rigidBody.velocity = new Vector2(direction * _moveSpeed, _rigidBody.velocity.y);
 
         if (direction < 0)
             _spriteRenderer.flipX = true;
@@ -27,15 +30,17 @@ public class Mover : MonoBehaviour
             _spriteRenderer.flipX = false;
     }
 
-    public void Jump(float jumpForce)
+    public void Jump()
     {
-        if (_isGrounded)
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, jumpForce);
+        if (IsGrounded)
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
     }
 
-    private void IsGroundedUpdate(Collision2D other, bool value)
+    private void UpdateIsGrounded(Collision2D other, bool value)
     {
-        if (other.gameObject.GetComponent<Ground>() != null)
-            _isGrounded = value;
+        other.gameObject.TryGetComponent(out Ground ground);
+
+        if (ground != null)
+            IsGrounded = value;
     }
 }

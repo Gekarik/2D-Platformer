@@ -3,14 +3,17 @@ using UnityEngine;
 
 public class CoinGrabber : MonoBehaviour
 {
-    public static event Action<Coin> OnCoinCollected;
-    
+    public event Action<Coin> OnCoinCollected;
+    private Coin _coin;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<Coin>() != null)
+        bool isCoin = other.TryGetComponent(out _coin);
+
+        if (isCoin)
         {
-            OnCoinCollected?.Invoke(other.GetComponent<Coin>());
+            OnCoinCollected?.Invoke(_coin);
             Destroy(other.gameObject);
-        }   
+        }
     }
 }
