@@ -5,6 +5,7 @@ public class Mover : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
+
     private Rigidbody2D _rigidBody;
     private SpriteRenderer _spriteRenderer;
 

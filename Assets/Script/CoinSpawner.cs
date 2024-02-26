@@ -9,20 +9,12 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private int _endPositionX;
     [SerializeField] private int _maxCoins;
 
-    private CoinGrabber _grabber;
     private int _coinsSpawned = 0;
 
     private void Start()
     {
-        _grabber = FindAnyObjectByType<CoinGrabber>();
         StartCoroutine(nameof(SpawnCoins));
     }
-
-    private void OnEnable() => _grabber.OnCoinCollected += HandleCollectedCoins;
-
-    private void OnDisable() => _grabber.OnCoinCollected -= HandleCollectedCoins;
-
-    private void HandleCollectedCoins(Coin coin) => _coinsSpawned--;
 
     private IEnumerator SpawnCoins()
     {
@@ -31,12 +23,23 @@ public class CoinSpawner : MonoBehaviour
         while (true)
         {
             if (_coinsSpawned < _maxCoins)
-            {
-                Vector2 spawnPoint = new Vector2(Random.Range(_startPositionX, _endPositionX), transform.position.y);
-                Instantiate(_coinPrefab, spawnPoint, Quaternion.identity);
-                _coinsSpawned++;
-            }
+                SpawnCoin();
+
             yield return wait;
         }
+    }
+
+    private void SpawnCoin()
+    {
+        Vector2 spawnPoint = new Vector2(Random.Range(_startPositionX, _endPositionX), transform.position.y);
+        Coin coin = Instantiate(_coinPrefab, spawnPoint, Quaternion.identity);
+        coin.OnCoinDestroy += HandleCoinDestroyed;
+        _coinsSpawned++;
+    }
+
+    private void HandleCoinDestroyed(Coin coin)
+    {
+        _coinsSpawned--;
+        coin.OnCoinDestroy -= HandleCoinDestroyed;
     }
 }
