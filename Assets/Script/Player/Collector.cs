@@ -29,7 +29,7 @@ public class Collector : MonoBehaviour
 
     private void HandleCoin(Coin coin)
     {
-        PlayerMoney playerMoney = GetComponent<PlayerMoney>();
+        var playerMoney = GetComponent<PlayerMoney>();
         playerMoney.AddMoney(coin.Cost);
     }
 }

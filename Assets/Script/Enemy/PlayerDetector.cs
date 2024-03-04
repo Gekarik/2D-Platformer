@@ -11,6 +11,7 @@ public class PlayerDetector : MonoBehaviour
         if (isPlayer)
             IsDetected = true;
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         bool isPlayer = other.TryGetComponent(out Player _player);

@@ -5,28 +5,7 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private float _playerDamage = 100f;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackPointRadius = 0.5f;
-
-    private bool _isAttack;
-
-    private InputReader _inputReader;
-    private AnimatorController _animatorController;
-
-    private void Start()
-    {
-        _inputReader = GetComponent<InputReader>();
-        _animatorController = GetComponent<AnimatorController>();
-    }
-
-    private void Update()
-    {
-        _isAttack = _inputReader.GetLeftClick();
-
-        if (_isAttack)
-        {
-            _animatorController.SetAttack();
-            Attack();
-        }
-    }
+    [SerializeField] private float test;
 
     public void Attack()
     {

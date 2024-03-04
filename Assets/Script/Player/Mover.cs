@@ -8,8 +8,8 @@ public class Mover : MonoBehaviour
 
     private Quaternion TurnLeft = Quaternion.Euler(0f, 180f, 0f);
     private Quaternion TurnRight = Quaternion.identity;
-
     private Rigidbody2D _rigidBody;
+
     public bool IsGrounded { get; private set; }
 
     private void Awake()
@@ -23,12 +23,8 @@ public class Mover : MonoBehaviour
 
     public void Move(float direction)
     {
+        Flip(direction);
         _rigidBody.velocity = new Vector2(direction * _moveSpeed, _rigidBody.velocity.y);
-
-        if (direction < 0)
-            transform.localRotation = TurnLeft;
-        else
-            transform.localRotation = TurnRight;
     }
 
     public void Jump()
@@ -43,5 +39,13 @@ public class Mover : MonoBehaviour
 
         if (ground != null)
             IsGrounded = value;
+    }
+
+    private void Flip(float direction)
+    {
+        if (direction < 0)
+            transform.localRotation = TurnLeft;
+        else
+            transform.localRotation = TurnRight;
     }
 }

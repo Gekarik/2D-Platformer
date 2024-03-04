@@ -36,17 +36,6 @@ public class Patroller : MonoBehaviour
         }
     }
 
-    private Vector2 ChangeTarget(Vector2 currentPosition)
-    {
-        Vector2 leftPosition = new Vector2(_startPosition.x - _offset, _startPosition.y);
-        Vector2 rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
-
-        if (currentPosition == leftPosition)
-            return rightPosition;
-        else
-            return leftPosition;
-    }
-
     public Vector2 Patrol(Vector2 currentPosition)
     {
         _enemy.Flip(_currentTarget, currentPosition.x);
@@ -58,5 +47,16 @@ public class Patroller : MonoBehaviour
         }
 
         return Vector2.MoveTowards(currentPosition, _currentTarget, _enemy.MoveSpeed * Time.deltaTime);
+    }
+
+    private Vector2 ChangeTarget(Vector2 currentPosition)
+    {
+        Vector2 leftPosition = new Vector2(_startPosition.x - _offset, _startPosition.y);
+        Vector2 rightPosition = new Vector2(_startPosition.x + _offset, _startPosition.y);
+
+        if (currentPosition == leftPosition)
+            return rightPosition;
+        else
+            return leftPosition;
     }
 }

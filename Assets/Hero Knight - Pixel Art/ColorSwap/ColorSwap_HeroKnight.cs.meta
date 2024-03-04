@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: 58a4d227816c28f4a8c59266bf74969b
-NativeFormatImporter:
+guid: 4e3fab4f60695b14c9a85e1b2c51ecaf
+MonoImporter:
   externalObjects: {}
-  mainObjectFileID: 7400000
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,5 +14,5 @@ AssetOrigin:
   productId: 165188
   packageName: Hero Knight - Pixel Art
   packageVersion: 1.2
-  assetPath: Assets/Animations/HeroKnight_Hurt.anim
+  assetPath: Assets/Hero Knight - Pixel Art/ColorSwap/ColorSwap_HeroKnight.cs
   uploadId: 447637

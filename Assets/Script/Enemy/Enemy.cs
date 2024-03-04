@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(AnimatorController), typeof(Patroller))]
-[RequireComponent(typeof(EnemyHealth),typeof(EnemyCombat))]
+[RequireComponent(typeof(Rigidbody2D), typeof(AnimatorController), typeof(BoxCollider2D))]
+[RequireComponent(typeof(EnemyHealth),typeof(EnemyCombat), typeof(Patroller))]
 public class Enemy : MonoBehaviour
 {
     [field: SerializeField] public float MoveSpeed { get; private set; }
@@ -34,8 +34,9 @@ public class Enemy : MonoBehaviour
         _patroller = GetComponent<Patroller>();
         _knightAnimator = GetComponent<AnimatorController>();
         _enemyHealth = GetComponent<EnemyHealth>();
-        _patroller.SetStartPositions(_rigidbody2D.position);
         _enemyCombat = GetComponent<EnemyCombat>();
+
+        _patroller.SetStartPositions(_rigidbody2D.position);
     }
 
     private void FixedUpdate()
@@ -83,16 +84,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
-
-    private Vector2 CalculatePlayerPosition()
-    {
-        if (_player.position.x < _rigidbody2D.position.x)
-            return new Vector2(_player.position.x + _offset, _rigidbody2D.position.y);
-        else
-            return new Vector2(_player.position.x - _offset, _rigidbody2D.position.y);
-    }
-
     public void Flip(Vector2 target, float currentXPosition)
     {
         switch (target.x - currentXPosition)
@@ -104,5 +95,13 @@ public class Enemy : MonoBehaviour
                 transform.localRotation = TurnRight;
                 break;
         }
+    }
+
+    private Vector2 CalculatePlayerPosition()
+    {
+        if (_player.position.x < _rigidbody2D.position.x)
+            return new Vector2(_player.position.x + _offset, _rigidbody2D.position.y);
+        else
+            return new Vector2(_player.position.x - _offset, _rigidbody2D.position.y);
     }
 }

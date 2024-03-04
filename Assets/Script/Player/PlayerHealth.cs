@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public event Action Died;
+    public event Action Hited;
 
     [SerializeField] private float _health = 100f;
     [SerializeField] private float _maxHealth = 100f;
@@ -22,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damagePoint)
     {
         _health -= damagePoint;
+        Hited?.Invoke();
 
         if (_health <= 0)
         {
