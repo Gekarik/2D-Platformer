@@ -6,15 +6,15 @@ public class Mover : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
 
-    private Rigidbody2D _rigidBody;
-    private SpriteRenderer _spriteRenderer;
+    private Quaternion TurnLeft = Quaternion.Euler(0f, 180f, 0f);
+    private Quaternion TurnRight = Quaternion.identity;
 
+    private Rigidbody2D _rigidBody;
     public bool IsGrounded { get; private set; }
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D other) => UpdateIsGrounded(other, true);
@@ -26,9 +26,9 @@ public class Mover : MonoBehaviour
         _rigidBody.velocity = new Vector2(direction * _moveSpeed, _rigidBody.velocity.y);
 
         if (direction < 0)
-            _spriteRenderer.flipX = true;
+            transform.localRotation = TurnLeft;
         else
-            _spriteRenderer.flipX = false;
+            transform.localRotation = TurnRight;
     }
 
     public void Jump()

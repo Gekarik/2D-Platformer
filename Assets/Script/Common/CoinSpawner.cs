@@ -33,13 +33,13 @@ public class CoinSpawner : MonoBehaviour
     {
         Vector2 spawnPoint = new Vector2(Random.Range(_startPositionX, _endPositionX), transform.position.y);
         Coin coin = Instantiate(_coinPrefab, spawnPoint, Quaternion.identity);
-        coin.OnCoinDestroy += HandleCoinDestroyed;
+        coin.Collected += HandleCoinDestroyed;
         _coinsSpawned++;
     }
 
-    private void HandleCoinDestroyed(Coin coin)
+    private void HandleCoinDestroyed(ICollectible coin)
     {
         _coinsSpawned--;
-        coin.OnCoinDestroy -= HandleCoinDestroyed;
+        coin.Collected -= HandleCoinDestroyed;
     }
 }
