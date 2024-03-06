@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(InputReader), typeof(Mover), typeof(AnimatorController))]
-[RequireComponent(typeof(PlayerHealth), typeof(PlayerCombat))]
+[RequireComponent(typeof(Health), typeof(Combat))]
 public class Player : MonoBehaviour
 {
     private float _movementInput;
@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
     private InputReader _inputReader;
     private Mover _mover;
     private AnimatorController _animatorController;
-    private PlayerHealth _playerHealth;
-    private PlayerCombat _playerCombat;
+    private Health _playerHealth;
+    private Combat _playerCombat;
 
     private void OnEnable()
     {
@@ -31,8 +31,8 @@ public class Player : MonoBehaviour
         _inputReader = GetComponent<InputReader>();
         _mover = GetComponent<Mover>();
         _animatorController = GetComponent<AnimatorController>();
-        _playerHealth = GetComponent<PlayerHealth>();
-        _playerCombat = GetComponent<PlayerCombat>();
+        _playerHealth = GetComponent<Health>();
+        _playerCombat = GetComponent<Combat>();
     }
 
     private void Update()
@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
         _isJumping = _inputReader.GetJumpMovement();
         _isAttack = _inputReader.GetLeftClick();
 
-        if (_isAttack)
+        if (_isAttack && _playerCombat.CanAttack)
         {
             _animatorController.SetAttack();
             _playerCombat.Attack();

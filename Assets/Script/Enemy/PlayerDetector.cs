@@ -6,17 +6,13 @@ public class PlayerDetector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        bool isPlayer = other.TryGetComponent(out Player _player);
-
-        if (isPlayer)
+        if (other.TryGetComponent(out Player _player))
             IsDetected = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        bool isPlayer = other.TryGetComponent(out Player _player);
-
-        if (isPlayer)
-            IsDetected = false;
+        if (other.TryGetComponent(out Player _player))
+            IsDetected = true; 
     }
 }

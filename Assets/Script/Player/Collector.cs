@@ -1,8 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerHealth), typeof(PlayerMoney))]
+[RequireComponent(typeof(Health), typeof(MoneyBag))]
 public class Collector : MonoBehaviour
 {
+    private MoneyBag _bag;
+    private Health _health;
+    private void Start()
+    {
+        _health = GetComponent<Health>();
+        _bag = GetComponent<MoneyBag>();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out ICollectible item))
@@ -21,15 +29,6 @@ public class Collector : MonoBehaviour
         }
     }
 
-    private void HandleAidKit(AidKit kit)
-    {
-        var playerHealth = GetComponent<PlayerHealth>();
-        playerHealth.Heal(kit.HealPoints);
-    }
-
-    private void HandleCoin(Coin coin)
-    {
-        var playerMoney = GetComponent<PlayerMoney>();
-        playerMoney.AddMoney(coin.Cost);
-    }
+    private void HandleAidKit(AidKit kit) => _health.Heal(kit.HealPoints);
+    private void HandleCoin(Coin coin) => _bag.AddMoney(coin.Cost);
 }
