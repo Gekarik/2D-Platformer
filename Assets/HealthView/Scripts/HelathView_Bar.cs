@@ -7,7 +7,7 @@ public class HelathView_Bar : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private bool _smoothChanging;
-    [SerializeField] private float _speedOfChanging = 0.1f;
+    [SerializeField] private float _speedOfChanging = 0.5f;
 
     private Slider _slider;
 

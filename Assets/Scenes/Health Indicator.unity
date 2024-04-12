@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 743482436}
   _smoothChanging: 1
-  _speedOfChanging: 0.1
+  _speedOfChanging: 1
 --- !u!114 &115628447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -907,6 +907,10 @@ PrefabInstance:
     - target: {fileID: 1307712159331037959, guid: 4fb20ea31d2f83847b7c5d13aaa1793f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751280673643485737, guid: 4fb20ea31d2f83847b7c5d13aaa1793f, type: 3}
+      propertyPath: _smoothDecreaseDuration
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4899190725199857289, guid: 4fb20ea31d2f83847b7c5d13aaa1793f, type: 3}
       propertyPath: m_Name

@@ -6,7 +6,7 @@ public class TextHelathView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _healthField;
     [SerializeField] private Health _health;
-    [SerializeField] private float _changeSpeed = 100.0f;
+    [SerializeField] private float _smoothDecreaseDuration = 0.5f;
 
     private void Start()
     {
@@ -32,11 +32,14 @@ public class TextHelathView : MonoBehaviour
     {
         var healthPoint = float.Parse(_healthField.text);
         var currentHealthPoint = _health.Current;
+        float lerpTime = 0.0f;
 
-        while (healthPoint != currentHealthPoint)
+        while (lerpTime < _smoothDecreaseDuration)
         {
-            healthPoint = Mathf.MoveTowards(healthPoint, currentHealthPoint, _changeSpeed * Time.deltaTime);
-            _healthField.text = healthPoint.ToString("");
+            lerpTime += Time.deltaTime;
+            float lerpFactor = lerpTime / _smoothDecreaseDuration;
+            healthPoint = Mathf.Lerp(healthPoint, currentHealthPoint, lerpFactor);
+            _healthField.text = healthPoint.ToString("0");
             yield return null;
         }
     }
