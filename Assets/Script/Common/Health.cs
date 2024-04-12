@@ -3,44 +3,49 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _current = 100f;
-    [SerializeField] private float _max = 100f;
+    [SerializeField] public float Current { get; private set; }
+    [SerializeField] public float Max { get; private set; } = 100f;
 
     public event Action Died;
     public event Action Hited;
+    public event Action Changed;
 
     private void Start()
     {
-        _current = _max;
+        Current = Max;
     }
 
     private void OnValidate()
     {
-        if (_current >= _max)
-            _current = _max;
+        if (Current >= Max)
+            Current = Max;
     }
 
     public void Heal(float healPoints)
     {
-        if (_current < _max && healPoints > 0)
-            _current += healPoints;
+        if (Current < Max && healPoints > 0)
+        {
+            Current += healPoints;
+            Changed?.Invoke();
+        }
     }
 
     public void TakeDamage(float damagePoint)
     {
-        if(damagePoint>0)
+        if (damagePoint > 0 && Current > 0)
         {
-            _current -= damagePoint;
+            Current -= damagePoint;
             Hited?.Invoke();
+            Changed?.Invoke();
         }
 
-        if (_current <= 0)
+        if (Current <= 0)
             Die();
     }
 
     public void Die()
     {
-        _current = 0;
+        Current = 0;
         Died?.Invoke();
         enabled = false;
     }
