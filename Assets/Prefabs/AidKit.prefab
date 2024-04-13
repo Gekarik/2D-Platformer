@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e83406d975aab0439b9a10572f5d627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <HealPoints>k__BackingField: 10
+  <HealPoints>k__BackingField: 25
 --- !u!61 &7113098179805988423
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
 
         if (Vector2.Distance(_rigidbody2D.position, _player.position) > _inaccuracy)
         {
-            _rigidbody2D.position = Vector2.MoveTowards(_rigidbody2D.position, _player.position, MoveSpeed * Time.deltaTime);
+            _rigidbody2D.position = Vector2.MoveTowards(new Vector2(_rigidbody2D.position.x,0), new Vector2(_player.position.x, 0) , MoveSpeed * Time.deltaTime);
         }
         else
         {

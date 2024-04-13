@@ -25,7 +25,11 @@ public class Health : MonoBehaviour
     {
         if (Current < Max && healPoints > 0)
         {
-            Current += healPoints;
+            if (Current + healPoints >= Max)
+                Current = Max;
+            else
+                Current += healPoints;
+
             Changed?.Invoke();
         }
     }
