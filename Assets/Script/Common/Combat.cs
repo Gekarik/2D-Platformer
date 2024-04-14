@@ -20,7 +20,6 @@ public class Combat : MonoBehaviour
     private Health _selfHealth;
     private WaitForSeconds _attackCooldownTime;
     private WaitForSeconds _castCooldownTime;
-    private Coroutine suckBloodCoroutine;
 
     private enum Mode
     {

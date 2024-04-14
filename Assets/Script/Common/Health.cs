@@ -6,6 +6,8 @@ public class Health : MonoBehaviour
     [field:SerializeField] public float Max { get; private set; } = 100f;
     [field:SerializeField] public float Current { get; private set; }
 
+    private float min = 0f;
+
     public event Action Died;
     public event Action Hited;
     public event Action Changed;
@@ -17,39 +19,33 @@ public class Health : MonoBehaviour
 
     private void OnValidate()
     {
-        if (Current >= Max)
-            Current = Max;
+        Current = Mathf.Clamp(Current, 0, Max);
     }
 
     public void Heal(float healPoints)
     {
-        if (Current < Max && healPoints > 0)
+        if (healPoints > 0)
         {
-            if (Current + healPoints >= Max)
-                Current = Max;
-            else
-                Current += healPoints;
-
+            Current = Mathf.Clamp(Current + healPoints, min, Max);
             Changed?.Invoke();
         }
     }
 
-    public void TakeDamage(float damagePoint)
+    public void TakeDamage(float damagePoints)
     {
-        if (damagePoint > 0 && Current > 0)
+        if (damagePoints > 0)
         {
-            Current -= damagePoint;
+            Current = Mathf.Clamp(Current - damagePoints, min, Max);
             Hited?.Invoke();
             Changed?.Invoke();
-        }
 
-        if (Current <= 0)
-            Die();
+            if (Current <= 0)
+                Die();
+        }
     }
 
     public void Die()
     {
-        Current = 0;
         Died?.Invoke();
         enabled = false;
     }

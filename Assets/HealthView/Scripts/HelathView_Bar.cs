@@ -9,12 +9,19 @@ public class HelathView_Bar : MonoBehaviour
     [SerializeField] private bool _smoothChanging;
     [SerializeField] private float _speedOfChanging = 0.5f;
 
+    private Canvas _canvas;
     private Slider _slider;
 
     private void Start()
     {
+        _canvas = GetComponentInParent<Canvas>();
         _slider = GetComponent<Slider>();
         _slider.value = _health.Max;
+    }
+
+    private void LateUpdate()
+    {
+        _canvas.transform.rotation = Camera.main.transform.rotation; //ошибка?
     }
 
     private void OnEnable()
