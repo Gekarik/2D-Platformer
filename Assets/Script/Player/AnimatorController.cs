@@ -10,6 +10,12 @@ public class AnimatorController : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    public void Jump(float airSpedY, bool isGrounded)
+    {
+        _animator.SetFloat(AnimatorData.Params.AirSpeedY, airSpedY);
+        _animator.SetBool(AnimatorData.Params.IsGrounded, isGrounded);
+    }
+
     public void SetWalking(bool isWalking) => _animator.SetBool(AnimatorData.Params.IsWalking, isWalking);
 
     public void SetAttack() => _animator.SetTrigger(AnimatorData.Params.Attack);

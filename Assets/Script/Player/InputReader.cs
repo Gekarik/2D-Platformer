@@ -7,7 +7,7 @@ public class InputReader : MonoBehaviour
     private const string Jump = nameof(Jump);
     private const string Fire1 = nameof(Fire1);
     private const string Fire2 = nameof(Fire2);
-
+    
     public float GetHorizontalMovement() => Input.GetAxis(Horizontal);
 
     public bool GetJumpMovement() => Input.GetAxis(Jump) > 0;

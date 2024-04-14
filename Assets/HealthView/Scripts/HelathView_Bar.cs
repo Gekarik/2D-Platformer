@@ -19,12 +19,20 @@ public class HelathView_Bar : MonoBehaviour
 
     private void OnEnable()
     {
+        _health.Died += HandleDeath;
         _health.Changed += TakeDamage;
     }
 
     private void OnDisable()
     {
+        _health.Died -= HandleDeath;
         _health.Changed -= TakeDamage;
+    }
+
+    private void HandleDeath()
+    {
+        enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void TakeDamage()

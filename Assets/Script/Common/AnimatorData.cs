@@ -8,6 +8,8 @@ public class AnimatorData : MonoBehaviour
         public const string Attack = nameof(Attack);
         public const string Die = nameof(Die);
         public const string Hurt = nameof(Hurt);
+        public const string AirSpeedY = nameof(AirSpeedY);
+        public const string IsGrounded = nameof(IsGrounded);
     }
 
     public static class States

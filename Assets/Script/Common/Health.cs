@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] public float Current { get; private set; }
-    [SerializeField] public float Max { get; private set; } = 100f;
+    [field:SerializeField] public float Max { get; private set; } = 100f;
+    [field:SerializeField] public float Current { get; private set; }
 
     public event Action Died;
     public event Action Hited;

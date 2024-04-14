@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 7346264258067929766}
   - component: {fileID: 3309940689310293500}
   - component: {fileID: 1153238972222258886}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.2538361, y: 0.62556654}
+  m_Offset: {x: -0.06573069, y: 0.70056695}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -223,7 +223,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.91744435, y: 1.2687887}
+  m_Size: {x: 0.82613945, y: 1.2753104}
   m_EdgeRadius: 0
 --- !u!114 &3670610594176904519
 MonoBehaviour:
@@ -237,8 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1069495bf03fd284d9f7c6aba3edbca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 7.68
-  _jumpForce: 7.18
+  <MoveSpeed>k__BackingField: 5
+  <JumpForce>k__BackingField: 6
 --- !u!114 &4903964585818816145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,6 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4171fb3a84204564796c5da78bd0cd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Current>k__BackingField: 75
+  <Max>k__BackingField: 100
 --- !u!114 &3309940689310293500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,13 +326,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa68c1accfac53040806988b7f7aed4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 100
-  _attackPoint: {fileID: 0}
+  _meleeDamage: 25
+  _attackRate: 2
+  _castRate: 0.5
+  _abilityDamage: 10
+  _vampirismDuration: 6
+  _attackPoint: {fileID: 264929984830999611}
   _attackPointRadius: 0.5
-  _attackRate: 0
   _enemyMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!1001 &9049988601558137585
 PrefabInstance:
   m_ObjectHideFlags: 0

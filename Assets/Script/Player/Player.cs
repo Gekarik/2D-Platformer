@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private float _movementInput;
     private bool _isJumping;
     private bool _isAttack;
+    private bool _isVampirismCast;
 
     private InputReader _inputReader;
     private Mover _mover;
@@ -40,12 +41,16 @@ public class Player : MonoBehaviour
         _movementInput = _inputReader.GetHorizontalMovement();
         _isJumping = _inputReader.GetJumpMovement();
         _isAttack = _inputReader.GetLeftClick();
+        _isVampirismCast = _inputReader.GetRightClick();
 
         if (_isAttack && _playerCombat.CanAttack)
         {
             _animatorController.SetAttack();
             _playerCombat.Attack();
         }
+
+        if (_isVampirismCast && _playerCombat.CanCast)
+            _playerCombat.SuckBlood();
 
         if (_movementInput == 0)
             _animatorController.SetWalking(false);
@@ -58,6 +63,8 @@ public class Player : MonoBehaviour
         if (_isJumping)
             _mover.Jump();
 
+        _animatorController.Jump(_mover.AirSpeedY, _mover.IsGrounded);
+
         if (_movementInput != 0)
             _mover.Move(_movementInput);
     }
@@ -66,7 +73,9 @@ public class Player : MonoBehaviour
 
     private void HandleDeath()
     {
-        _animatorController.SetDie();
         enabled = false;
+        _animatorController.SetDie();
+        _playerHealth.enabled = false;
+        _playerCombat.enabled = false;
     }
 }
